@@ -1,0 +1,22 @@
+{
+  "name": "somscraper",
+  "version": "1.0.0",
+  "description": "get your projects and devlogs in an easy to customize form!",
+  "license": "ISC",
+  "author": "QuantumKya",
+  "type": "commonjs",
+  "main": "index.js",
+  "bin": {
+    "somscraper": "./cli.js"
+  },
+  "scripts": {
+    "get": "node index.js",
+    "build": "node build.js",
+    "preview": "node preview.js"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "chalk": "^4.1.2",
+    "express": "^5.1.0"
+  }
+}
