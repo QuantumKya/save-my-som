@@ -41,16 +41,18 @@ In case the list isn't enough, here's a video guide.
 
 Now that you have your cookies in a file, you can run the program. Oh, yeah, how do you do that?
 
+Clone the Git repository to your computer somewhere and then enter it in cmd. Then, you can run commands!
+
 There are three commands, whose names are self-explanatory.
 Bracketed text indicates a parameter field.
 ```bash
-somscraper get -- cookiefile="<file path>" # Gathers your project data from SoM.
+save-my-som get -- cookiefile="<file path>" # Gathers your project data from SoM.
 ```
 ```bash
-somscraper build # builds data into folder with HTML and CSS.
+save-my-som build # builds data into folder with HTML and CSS.
 ```
 ```bash
-somscraper preview -- port=<port number> # Opens a local server to preview your HTML folder. Helpful for customization.
+save-my-som preview -- port=<port number> # Opens a local server to preview your HTML folder. Helpful for customization.
 ```
 
 The order in which they're written here is probably the order in which you'd run them.

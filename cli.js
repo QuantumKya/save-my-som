@@ -18,7 +18,7 @@ function runCmd(comm) {
 function helpCmd() {
     console.log(`
 ${chalk.cyan("Usage:")}
-  ${chalk.yellow("somscraper")} ${chalk.white("<command>")} ${chalk.gray("-- <params>")}
+  ${chalk.yellow("save-my-som")} ${chalk.white("<command>")} ${chalk.gray("-- <params>")}
 
 ${chalk.cyan("Commands:")}
   ${chalk.green("get")}                  Gather SoM project data

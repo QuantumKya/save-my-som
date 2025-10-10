@@ -1,13 +1,13 @@
 {
-  "name": "somscraper",
+  "name": "save-my-som",
   "version": "1.0.0",
-  "description": "get your projects and devlogs in an easy to customize form!",
+  "description": "save your projects and devlogs for the future in an easy-to-customize form!",
   "license": "ISC",
   "author": "QuantumKya",
   "type": "commonjs",
   "main": "index.js",
   "bin": {
-    "somscraper": "./cli.js"
+    "save-my-som": "./cli.js"
   },
   "scripts": {
     "get": "node index.js",
