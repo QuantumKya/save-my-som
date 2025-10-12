@@ -7,7 +7,7 @@ const cmd = process.argv[2];
 
 function runCmd(comm) {
     try {
-        execSync(comm, { stdio: 'inherit' });
+        execSync(comm + ' ' + process.argv.slice(3).join(' '), { stdio: 'inherit' });
     }
     catch (err) {
         console.error(chalk.red(err));

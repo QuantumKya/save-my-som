@@ -1,6 +1,4 @@
-# SoM Personal Project Scraper
-
-### HEY THIS IS UNFINISHED DON'T READ IT YET OR DO WHATEVER YOU WANT ACTUALLY
+# Save My SoM
 
 SoM is ending? You want to keep all of your projects and their devlogs on hand? Maybe even in an easily presentable format? Well, here's the tool for you! 
 
@@ -13,13 +11,9 @@ This program has 3 main functions:
 
 ## Collecting Project Data
 
-Unfortunately, to collect *your* project data, the program needs to have your SoM browser cookies. But you can give it them with a few simple steps.
-There's an easy way, which requires some trust, or a (slightly) harder way, which may teach you a bit about browser cookies!
+Unfortunately, to collect *your* project data, the program needs to have your SoM browser cookies. But you can prepare them with a few simple steps.
+It may teach you a bit about browser cookies!
 
-### Easy Way:
-Go to https://summer.hackclub.com/my_projects and paste the following code into your browser console. Then execute it, and you'll get a file with your cookies!
-
-### Hard Way:
 1. Go to https://summer.hackclub.com/my_projects.
 2. Use Inspect tool to open the info panel.
 3. Go to the "Storage" tab in the list on top.
@@ -33,35 +27,36 @@ ahoy_visitor=xxxxx
 ```
 Aaaaand you're done!
 
-In case the list isn't enough, here's a video guide.
-
-<!put video here later>
-
 ## Running the Program
 
 Now that you have your cookies in a file, you can run the program. Oh, yeah, how do you do that?
 
-Clone the Git repository to your computer somewhere and then enter it in cmd. Then, you can run commands!
+Clone the Git repository to your computer somewhere and then enter it in cmd.
+Run the following command to activate the CLI:
+```bash
+npm link
+```
+Then, you can run commands!
 
 There are three commands, whose names are self-explanatory.
 Bracketed text indicates a parameter field.
 ```bash
-save-my-som get -- cookiefile="<file path>" # Gathers your project data from SoM.
+save-my-som get --cookiefile="<filepath>" # Gathers your project data from SoM.
 ```
 ```bash
 save-my-som build # builds data into folder with HTML and CSS.
 ```
 ```bash
-save-my-som preview -- port=<port number> # Opens a local server to preview your HTML folder. Helpful for customization.
+save-my-som preview --port=<portnumber> # Opens a local server to preview your HTML folder. Helpful for customization.
 ```
 
 The order in which they're written here is probably the order in which you'd run them.
 
-In order for it all to work, the files of the `/build` folder need to be like so before running:
+In order for it all to work, the files of the `/build` folder should be like so before running:
 ```
 build/
 ├── html/
-│   ├── img/
+│   ├── img/ (empty)
 │   └── style.css (not empty)
 └── project_data.json (empty)
 ```
@@ -73,9 +68,9 @@ Once you've run the commands and have HTML and CSS ready to go... That's it, the
 
 I've separated the more complicated and specific code from the customizable, so you can change plenty of things about how the HTML files are built.
 
-In `htmlblocks.mjs`, you can change the HTML snippets that are used for each component.
+In `htmlblocks.mjs`, you can change the HTML snippets that are used for each component; e.g., the layout and CSS classes of elements.
 
-In `build/html/style.css`, you can change... the CSS. Shocker!
+In `build/html/style.css`, you can change... the CSS. Shocker! I've already written some CSS for basic looking-good-ness, but you can change it however you want.
 
 And, of course, you can change anything individual of the HTML once you have it! Happy customizing!
 

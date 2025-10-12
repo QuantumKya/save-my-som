@@ -5,7 +5,7 @@ const fs = require('fs');
 const args = process.argv.slice(2);
 let inputport;
 for (const arg of args) {
-    if (arg.startsWith('port=')) inputport = arg.split('=')[1];
+    if (arg.startsWith('--port=')) inputport = arg.split('=')[1];
 }
 
 const app = express();

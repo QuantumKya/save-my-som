@@ -1,25 +1,31 @@
 const axios = require('axios');
 const fs = require('fs');
 
-const args = process.argv.slice(2);
+const args = process.argv;
 
 let cookiefile;
 for (const arg of args) {
-    if (arg.startsWith('cookiefile=')) {
+    if (arg.startsWith('--cookiefile=')) {
         cookiefile = arg.split('=')[1];
     }
 }
+if (!cookiefile) {
+    console.error(`You didn\'t supply the cookies! No file provided.`);
+    process.exit(1);
+}
 
-const journey = args.find(arg => arg.startsWith('_journey_session='));
-const ahoy = args.find(arg => arg.startsWith('ahoy_visitor='));
+const cookieStrRead = fs.readFileSync(cookiefile).toString();
+const journeypos = cookieStrRead.indexOf('_journey_session=');
+const ahoypos = cookieStrRead.indexOf('ahoy_visitor=');
+const journey = cookieStrRead.slice(journeypos, cookieStrRead.indexOf('\n', journeypos));
+const ahoy = cookieStrRead.slice(ahoypos, cookieStrRead.indexOf('\n', ahoypos));
 if (!journey || !ahoy) {
     const starr = ["\"_journey_session\"", "\"ahoy_visitor\""];
     const varr = [journey, ahoy];
     const truearr = starr.filter((a,i)=>(!varr[i]));
-    if (!cookiefile) console.error(`You didn\'t supply the cookies! ${truearr.join(', ')} ${truearr.length > 1 ? 'are' : 'is'} missing`);
+    console.error(`You didn\'t supply the cookies! ${truearr.join(', ')} ${truearr.length > 1 ? 'are' : 'is'} missing`);
 }
-
-const cookieStr = cookiefile ? fs.readFileSync(cookiefile).toString().split('\n').join('; ').replace(/[\r\s]/g, '') : `${journey};${ahoy}`.replace(/[\r\n\s]+/g, ' ').trim();
+const cookieStr = `${journey}; ${ahoy}`.replace(/[\r\s]/g, '').trim();
 
 let projs = [];
 let projshtml = {};
@@ -31,8 +37,8 @@ let state = 'unstarted';
 
 if (fs.readdirSync('./build/html').includes('img')) {
     fs.rmSync('./build/html/img', { recursive: true });
-    fs.mkdirSync('./build/html/img');
 }
+fs.mkdirSync('./build/html/img', { recursive: true });
 
 const arrayOrderingThing = (arr) => Object.keys(arr).sort((a,b) => Number(a.slice(2)) - Number(b.slice(2))).map(a=>arr[a])
 
@@ -70,7 +76,7 @@ async function fetchWCookies(url) {
     return await fetch(url, {
         method: 'GET',
         headers: {
-            'cookie': String(cookieStr),
+            'cookie': cookieStr,
             'User-Agent': 'Mozilla/5.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -120,11 +126,12 @@ async function processProject(projid, projiter) {
     state = 'images';
     const res = await fetchWCookies(`https://summer.hackclub.com/api/v1/projects/${projid}`)
     .catch(err => console.error("Error while processing project:\n\t", err));
+    
+    fs.mkdirSync(`build/html/img/proj${projiter}`, { recursive: true });
 
-    downloadImage(res.banner, `proj${projiter}/banner`)
-    .then(resp => projshtml[`id${projiter}`] = { content: res, bannerpath: resp.filepath });
+    const resp = await downloadImage(res.banner, `proj${projiter}/banner`)
+    projshtml[`id${projiter}`] = { content: res, bannerpath: resp.filepath };
 
-    fs.mkdirSync(`build/html/img/proj${projiter}`);
     devlogsimg[`id${projiter}`] = {};
     await Promise.all(res.devlogs.map(async (devlog, i) => {
         const img = await downloadImage(devlog.attachment, `proj${projiter}/devlog${i}_attachment`);
