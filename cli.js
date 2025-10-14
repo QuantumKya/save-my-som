@@ -10,7 +10,7 @@ function runCmd(comm) {
         execSync(comm + ' ' + process.argv.slice(3).join(' '), { stdio: 'inherit' });
     }
     catch (err) {
-        console.error(chalk.red(err));
+        console.error(chalk.red(`Command failed: ${err.message}`));
         process.exit(1);
     }
 }

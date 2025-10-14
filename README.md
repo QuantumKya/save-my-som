@@ -1,6 +1,6 @@
 # Save My SoM
 
-SoM is ending? You want to keep all of your projects and their devlogs on hand? Maybe even in an easily presentable format? Well, here's the tool for you! 
+SoM is ending? You want to keep all of your projects and their devlogs on hand? Maybe even in an easily presentable format? Well, here's the tool for you!
 
 ## Overview
 
@@ -41,25 +41,16 @@ Then, you can run commands!
 There are three commands, whose names are self-explanatory.
 Bracketed text indicates a parameter field.
 ```bash
-save-my-som get --cookiefile="<filepath>" # Gathers your project data from SoM.
+save-my-som get --cookiefile="<filepath>" # Gathers your project data from SoM. Requires file path to your cookie text file.
 ```
 ```bash
-save-my-som build # builds data into folder with HTML and CSS.
+save-my-som build # Builds data into folder with HTML and CSS.
 ```
 ```bash
 save-my-som preview --port=<portnumber> # Opens a local server to preview your HTML folder. Helpful for customization.
 ```
 
 The order in which they're written here is probably the order in which you'd run them.
-
-In order for it all to work, the files of the `/build` folder should be like so before running:
-```
-build/
-├── html/
-│   ├── img/ (empty)
-│   └── style.css (not empty)
-└── project_data.json (empty)
-```
 
 Once you've run the commands and have HTML and CSS ready to go... That's it, they're ready to go! Thanks for using my program.
 

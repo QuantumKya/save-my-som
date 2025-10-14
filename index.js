@@ -14,18 +14,19 @@ if (!cookiefile) {
     process.exit(1);
 }
 
-const cookieStrRead = fs.readFileSync(cookiefile).toString();
+const cookieStrRead = fs.readFileSync(cookiefile).toString().replace(/[\n\s\r]/g, '').trim();
 const journeypos = cookieStrRead.indexOf('_journey_session=');
 const ahoypos = cookieStrRead.indexOf('ahoy_visitor=');
-const journey = cookieStrRead.slice(journeypos, cookieStrRead.indexOf('\n', journeypos));
-const ahoy = cookieStrRead.slice(ahoypos, cookieStrRead.indexOf('\n', ahoypos));
-if (!journey || !ahoy) {
+const journey = cookieStrRead.slice(journeypos, ahoypos);
+const ahoy = cookieStrRead.slice(ahoypos);
+if (journey === '' || ahoy === '') {
     const starr = ["\"_journey_session\"", "\"ahoy_visitor\""];
     const varr = [journey, ahoy];
     const truearr = starr.filter((a,i)=>(!varr[i]));
     console.error(`You didn\'t supply the cookies! ${truearr.join(', ')} ${truearr.length > 1 ? 'are' : 'is'} missing`);
+    process.exit(1);
 }
-const cookieStr = `${journey}; ${ahoy}`.replace(/[\r\s]/g, '').trim();
+const cookieStr = `${journey}; ${ahoy}`.replace(/[\n\r\s]/g, '').trim();
 
 let projs = [];
 let projshtml = {};
@@ -35,9 +36,6 @@ let totalattachments = 0;
 let doneattachments = 0;
 let state = 'unstarted';
 
-if (fs.readdirSync('./build/html').includes('img')) {
-    fs.rmSync('./build/html/img', { recursive: true });
-}
 fs.mkdirSync('./build/html/img', { recursive: true });
 
 const arrayOrderingThing = (arr) => Object.keys(arr).sort((a,b) => Number(a.slice(2)) - Number(b.slice(2))).map(a=>arr[a])
@@ -69,6 +67,7 @@ async function fetchProjects() {
     }
     catch (error) {
         console.error("Error while fetching:\n\t", error);
+        process.exit(1);
     }
 }
 
@@ -82,7 +81,11 @@ async function fetchWCookies(url) {
             'Content-Type': 'application/json',
         }
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .catch(err => {
+        console.error(`Failed fetching with cookies: ${err.message}`);
+        process.exit(1);
+    });
 }
 
 async function downloadImage(url, filename) {
@@ -111,6 +114,7 @@ async function downloadImage(url, filename) {
     }
     catch (error) {
         console.error("Problem downloading image:\n\t", error);
+        process.exit(1);
     }
 }
 
@@ -168,7 +172,7 @@ function progress(interval) {
         }
         else if (state === 'images') {
             const distance = Math.floor(doneattachments / totalattachments * 100);
-            process.stdout.write(`\rDownloading attachments & generating HTML... ${distance}% ${spinsym} `);
+            process.stdout.write(`\rDownloading attachments... ${distance}% ${spinsym} `);
         }
     }, interval);
 }
