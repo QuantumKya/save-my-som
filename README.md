@@ -12,6 +12,8 @@ This program has 3 main functions:
 Local Requirements:
 - NodeJS installed
 
+I plan to make it usable without installing NodeJS somehow in the future.
+
 ## Providing Cookies
 
 Unfortunately, to collect *your* project data, the program needs to have your SoM browser cookies. But you can prepare them with a few simple steps.
@@ -34,7 +36,7 @@ Aaaaand you're done!
 
 Now that you have your cookies in a file, you can run the program. Oh, yeah, how do you do that?
 
-Clone the Git repository to your computer somewhere and then enter it in cmd.
+Download the Zip file in this repository called `save-my-som.zip` and unpack it somewhere. Then enter the folder in cmd.
 Run the following command to activate the CLI:
 ```bash
 npm link
