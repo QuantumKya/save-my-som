@@ -9,7 +9,10 @@ This program has 3 main functions:
 - building it into HTML for you to use whereever you want,
 - and letting you preview the HTML with an Express server.
 
-## Collecting Project Data
+Local Requirements:
+- NodeJS installed
+
+## Providing Cookies
 
 Unfortunately, to collect *your* project data, the program needs to have your SoM browser cookies. But you can prepare them with a few simple steps.
 It may teach you a bit about browser cookies!

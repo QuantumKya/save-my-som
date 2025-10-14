@@ -35,6 +35,9 @@ function abc() {
         
         projress = `${i+1}/${projs.length}`;
     });
+    
+    fs.copyFileSync('build.css', 'build/html/style.css');
+
     state = 'done';
 }
 

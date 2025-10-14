@@ -1,5 +1,6 @@
 const axios = require('axios');
 const fs = require('fs');
+const { toHTMLTitle } = require('./htmlblocks.mjs');
 
 const args = process.argv;
 
@@ -131,13 +132,16 @@ async function processProject(projid, projiter) {
     const res = await fetchWCookies(`https://summer.hackclub.com/api/v1/projects/${projid}`)
     .catch(err => console.error("Error while processing project:\n\t", err));
     
-    fs.mkdirSync(`build/html/img/proj${projiter}`, { recursive: true });
+    fs.mkdirSync(`build/html/img/${toHTMLTitle(res.title)}`, { recursive: true });
 
     const resp = await downloadImage(res.banner, `proj${projiter}/banner`)
     projshtml[`id${projiter}`] = { content: res, bannerpath: resp.filepath };
 
     devlogsimg[`id${projiter}`] = {};
     await Promise.all(res.devlogs.map(async (devlog, i) => {
+        if (!devlog.attachment) {
+            devlogsimg[`id${projiter}`][`id${i}`] = { file: '', typ: '' };
+        }
         const img = await downloadImage(devlog.attachment, `proj${projiter}/devlog${i}_attachment`);
         devlogsimg[`id${projiter}`][`id${i}`] = { file: img.filepath, typ: img.typ };
         if (doneattachments < totalattachments) doneattachments++;
