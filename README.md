@@ -39,7 +39,8 @@ Now that you have your cookies in a file, you can run the program. Oh, yeah, how
 Download the Zip file in this repository called `save-my-som.zip` and unpack it somewhere. Then enter the folder in cmd.
 Run the following command to activate the CLI:
 ```bash
-npm link
+$ npm install
+$ npm link
 ```
 Then, you can run commands!
 
