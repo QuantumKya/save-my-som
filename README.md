@@ -73,4 +73,12 @@ And, of course, you can change anything individual of the HTML once you have it!
 <br>
 <br>
 
+Edit:  
+I got recognised by Zachery Hackery :]
+
+<img width="371" height="70" alt="image" src="https://github.com/user-attachments/assets/757c27bb-fbd1-4390-97c5-9f6444603cbc" />
+
+<br>
+<br>
+
 © Rohan V-F 2025 (lol I don't know how copyright works)
